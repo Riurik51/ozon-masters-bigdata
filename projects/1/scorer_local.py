@@ -39,8 +39,6 @@ df_pred = pd.read_csv(pred_path, sep='\t', header=None, index_col=0, names=["id"
 len_true = len(df_true)
 len_pred = len(df_pred)
 
-print(df_pred['pred'].unique())
-print(df_true['true'].unique())
 logging.info(f"TRUE RECORDS {len_true}")
 logging.info(f"PRED RECORDS {len_pred}")
 
