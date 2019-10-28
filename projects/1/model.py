@@ -3,7 +3,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
- from sklearn.linear_model import SGDClassifier
+from sklearn.linear_model import SGDClassifier
 
 #
 # Dataset fields
@@ -51,5 +51,5 @@ preprocessor = ColumnTransformer(
 # Now we have a full prediction pipeline.
 model = Pipeline(steps=[
     ('preprocessor', preprocessor),
-    ('decisionTree', SGDClassifier(loss='log',random_state=0,  max_iter=1000))
+    ('SGDC', SGDClassifier(loss='log',random_state=0,  max_iter=1000))
 ])
