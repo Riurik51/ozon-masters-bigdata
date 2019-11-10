@@ -1,0 +1,1 @@
+INSERT OVERWRITE DIRECTORY 'Riurik51_hiveout' ROW FORMAT delimited STORED AS textfile SELECT * FROM hw2_pred;
