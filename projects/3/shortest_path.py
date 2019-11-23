@@ -12,6 +12,8 @@ def shortest_path(v_from, v_to, df, max_path_length=10):
                                       ).drop('follower')
     answer = Curr_queue.where(f'id == {v_to}').select('path')
     for i in range(max_path_length - 1):
+        if answer.count() > 0:
+            return answer
         Curr_queue = graph.join(Curr_queue.select(
             Curr_queue.id.alias('follower'),
             Curr_queue.path),
