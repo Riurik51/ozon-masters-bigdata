@@ -9,7 +9,7 @@ import pandas as pd
 tokenizer = RegexTokenizer(inputCol="reviewText", pattern='[\s\p{Punct}]', outputCol="reviewords")
 stop_words = StopWordsRemover.loadDefaultStopWords("english")
 swr = StopWordsRemover(inputCol=tokenizer.getOutputCol(), outputCol="words_filtered", stopWords=stop_words)
-count_vectorizer = CountVectorizer(vocabSize=700, minDF=0.001, inputCol=swr.getOutputCol(), outputCol="word_vector", binary=True)
+count_vectorizer = CountVectorizer(vocabSize=700, minDF=0.001, inputCol=swr.getOutputCol(), outputCol="features", binary=True)
 
 pipeline = Pipeline(stages=[
     tokenizer,
