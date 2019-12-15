@@ -14,8 +14,7 @@ count_vectorizer = CountVectorizer(vocabSize=700, minDF=0.001, inputCol=swr.getO
 pipeline = Pipeline(stages=[
     tokenizer,
     swr,
-    count_vectorizer,
-    lr
+    count_vectorizer
 ])
 
 sklearn_est = LogisticRegression()
