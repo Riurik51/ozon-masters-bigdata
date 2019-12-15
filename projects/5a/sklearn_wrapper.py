@@ -3,7 +3,6 @@ from pyspark import keyword_only
 from pyspark.ml import Model
 from pyspark.ml.param import Param, Params, TypeConverters
 from pyspark.ml.param.shared import HasFeaturesCol, HasLabelCol, HasPredictionCol
-from model import predict, vectorToArray, sklearn_est
 
 class SklearnEstimatorModel(Model, HasFeaturesCol, HasLabelCol, HasPredictionCol):
     model_file = Param(Params._dummy(), "model_path",
