@@ -21,7 +21,6 @@ sklearn_est = LogisticRegression()
 
 @F.pandas_udf(DoubleType())
 def predict(series):
-    # Необходимо сделать преобразования, потому что на вход приходит pd.Series(list)
     predictions = sklearn_est.value.predict(np.array(series.tolist()))
     return pd.Series(predictions)
 
