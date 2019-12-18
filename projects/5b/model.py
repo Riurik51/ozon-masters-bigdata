@@ -47,14 +47,14 @@ class SklearnEstimatorModel(Model, HasFeaturesCol, HasLabelCol, HasPredictionCol
         self._set(**kwargs)
 
     def _transform(self, dataset):
-        dataset = dataset.withColumn("features_array", vectorToArray("features")).localCheckpoint()
+        dataset = dataset.withColumn("features_array", vectorToArray(self.getFeaturesCol())).localCheckpoint()
         estimator = loads(base64.b64decode(self.getSklearnModel().encode('utf-8')))
         est_broadcast = spark.sparkContext.broadcast(estimator)
         @F.pandas_udf(DoubleType())
         def predict(series):
             predictions = est_broadcast.value.predict(np.array(series.tolist()))
             return pd.Series(predictions)
-        return dataset.withColumn(self.getPredictionCol(), predict(self.getFeaturesCol()))
+        return dataset.withColumn(self.getPredictionCol(), predict("features_array"))
 
 
 class SklearnEstimator(Estimator, HasFeaturesCol, HasPredictionCol, HasSklearnModel, HasLabelCol, DefaultParamsReadable, DefaultParamsWritable):
@@ -71,7 +71,7 @@ class SklearnEstimator(Estimator, HasFeaturesCol, HasPredictionCol, HasSklearnMo
         self.est.fit(np.array(local_dataset["features_array"].tolist()), local_dataset[self.getLabelCol()])
         model_string = base64.b64encode(dumps(self.est)).decode('utf-8')
         return SklearnEstimatorModel(sklearn_model=model_string, predictionCol=self.getPredictionCol(),
-                                         featuresCol='features_array', labelCol=self.getLabelCol())
+                                         featuresCol=self.getFeaturesCol(), labelCol=self.getLabelCol())
 
 
 spark_est = SklearnEstimator(featuresCol=count_vectorizer.getOutputCol())
