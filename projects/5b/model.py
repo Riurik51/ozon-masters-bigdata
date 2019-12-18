@@ -13,6 +13,8 @@ from sklearn.linear_model import LogisticRegression
 from pyspark.ml.util import DefaultParamsReadable, DefaultParamsWritable
 import pyspark.sql.functions as F
 import numpy as np
+import base64
+from pickle import dumps, loads
 
 tokenizer = RegexTokenizer(inputCol="reviewText", pattern='[\s\p{Punct}]', outputCol="reviewords")
 stop_words = StopWordsRemover.loadDefaultStopWords("english")
